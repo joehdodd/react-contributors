@@ -22,6 +22,16 @@ const Container = styled.div`
   }
 `;
 
+const AppTitle = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  h1 {
+    font-size: 2rem;
+    fomnt-weight: 800;
+    color: #402c56;
+  }
+`;
+
 const ContributorContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(auto-fit, 1fr);
@@ -49,7 +59,7 @@ const Contributor = styled.div`
 
 const ContributorName = styled.span`
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #402c56;
 `;
 
@@ -69,6 +79,9 @@ function RepoContributorApp() {
   return (
     <ContributorAppWrapper>
       <Container>
+        <AppTitle>
+          <h1>React Repository Contributors</h1>
+        </AppTitle>
         <ContributorContainer>
           {contributors.map((contributor) => (
             <Contributor key={contributor.id}>

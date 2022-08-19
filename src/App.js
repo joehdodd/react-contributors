@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
 const ContributorAppWrapper = styled.div`
   padding: 4%;
@@ -8,16 +8,16 @@ const ContributorAppWrapper = styled.div`
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  @media screen and (min-width: 768px) {
+  ${(props) => props.theme.breakpoints.tablet} {
     padding: 0 80px;
   }
-  @media screen and (min-width: 1024px) {
+  ${(props) => props.theme.breakpoints.tabletLarge} {
     padding: 0 160px;
   }
-  @media screen and (min-width: 1200px) {
+  ${(props) => props.theme.breakpoints.desktop} {
     padding: 0 240px;
   }
-  @media screen and (min-width: 1440px) {
+  ${(props) => props.theme.breakpoints.desktopLarge} {
     padding: 0 320px;
   }
 `;
@@ -28,7 +28,7 @@ const AppTitle = styled.div`
   h1 {
     font-size: 2rem;
     fomnt-weight: 800;
-    color: #402c56;
+    color: ${(props) => props.theme.palette.frontline};
   }
 `;
 
@@ -49,7 +49,7 @@ const Contributor = styled.div`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   :hover {
-    background-color: #f0f2f5;
+    background-color: ${(props) => props.theme.palette.grey};
   }
   img {
     width: 100px;
@@ -60,8 +60,21 @@ const Contributor = styled.div`
 const ContributorName = styled.span`
   font-size: 1.25rem;
   font-weight: 700;
-  color: #402c56;
+  color: ${(props) => props.theme.palette.frontline};
 `;
+
+const theme = {
+  breakpoints: {
+    tablet: "@media screen and (min-width: 768px)",
+    tabletLarge: "@media screen and (min-width: 1024px)",
+    desktop: "@media screen and (min-width: 1200px)",
+    desktopLarge: "@media screen and (min-width: 1440px)",
+  },
+  palette: {
+    frontline: "#402c56",
+    grey: "#f0f2f5",
+  },
+};
 
 function RepoContributorApp() {
   const [contributors, setContributors] = useState([]);
@@ -77,21 +90,23 @@ function RepoContributorApp() {
       });
   }, []);
   return (
-    <ContributorAppWrapper>
-      <Container>
-        <AppTitle>
-          <h1>React Repository Contributors</h1>
-        </AppTitle>
-        <ContributorContainer>
-          {contributors.map((contributor) => (
-            <Contributor key={contributor.id}>
-              <img src={contributor.avatar_url} alt={contributor.login} />
-              <ContributorName>{contributor.login}</ContributorName>
-            </Contributor>
-          ))}
-        </ContributorContainer>
-      </Container>
-    </ContributorAppWrapper>
+    <ThemeProvider theme={theme}>
+      <ContributorAppWrapper>
+        <Container>
+          <AppTitle>
+            <h1>React Repository Contributors</h1>
+          </AppTitle>
+          <ContributorContainer>
+            {contributors.map((contributor) => (
+              <Contributor key={contributor.id}>
+                <img src={contributor.avatar_url} alt={contributor.login} />
+                <ContributorName>{contributor.login}</ContributorName>
+              </Contributor>
+            ))}
+          </ContributorContainer>
+        </Container>
+      </ContributorAppWrapper>
+    </ThemeProvider>
   );
 }
 

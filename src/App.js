@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
 
-function App() {
+/*
+ * https://docs.github.com/en/rest/repos/repos#list-repository-contributors
+ */
+
+function RepoContributorApp() {
+  const [contributors, setContributors] = useState([]);
+  useEffect(() => {
+    fetch("https://api.github.com/repos/facebook/react/contributors")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setContributors([...data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>JOIN US</h1>
+      {contributors.map((contributor) => (
+        <div key={contributor.id}>
+          <img src={contributor.avatar_url} alt={contributor.login} />
+          <p>{contributor.login}</p>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default App;
+export default RepoContributorApp;

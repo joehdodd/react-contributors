@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const ContributorContainer = styled.div`
+const ContributorsContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(auto-fit, 1fr);
   grid-gap: 24px;
@@ -50,7 +50,7 @@ const Contributors = () => {
       });
   }, []);
   return (
-    <ContributorContainer>
+    <ContributorsContainer>
       {contributors.map((contributor) => (
         <Link key={contributor.id} to={`/contributor/${contributor.login}`}>
           <Contributor>
@@ -59,7 +59,7 @@ const Contributors = () => {
           </Contributor>
         </Link>
       ))}
-    </ContributorContainer>
+    </ContributorsContainer>
   );
 };
 

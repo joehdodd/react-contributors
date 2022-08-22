@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -66,7 +66,16 @@ const Contributor = () => {
         console.log(error);
       });
   }, [login]);
-
+  const contributorSite = useMemo(() => {
+    const hasSite = contributor?.blog;
+    let link = "";
+    if (hasSite) {
+      link = contributor.blog.includes("http")
+        ? contributor.blog
+        : `https://${contributor.blog}`;
+    }
+    return link.length ? link : "";
+  }, [contributor]);
   return (
     <ContributorView>
       <Link to="/"> &#60;= See All Contributors</Link>
@@ -92,7 +101,11 @@ const Contributor = () => {
                   <br />
                   <span>{contributor.location}</span>
                   <br />
-                  <a href={contributor.blog}>{contributor.blog}</a>
+                  {contributorSite && (
+                    <a href={contributorSite} target="_blank" rel="noreferrer">
+                      {contributor.blog}
+                    </a>
+                  )}
                 </div>
               </div>
               <img src={contributor.avatar_url} alt={contributor.login} />

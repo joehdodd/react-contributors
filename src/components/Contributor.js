@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
+
+const ContributorView = styled.div`
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 12px;
+`;
 
 const ContributorWrapper = styled.div`
   padding: 16px;
@@ -23,8 +29,11 @@ const ContributorContainer = styled.div`
 
 const ContributorBasicInfo = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: 1fr 1fr;
   grid-gap: 8px;
+  ${(props) => props.theme.breakpoints.tablet} {
+    grid-template-columns: 1fr 1fr;
+  }
   h1,
   h3,
   p,
@@ -59,36 +68,39 @@ const Contributor = () => {
   }, [login]);
 
   return (
-    <ContributorWrapper>
-      {contributor && (
-        <ContributorContainer>
-          <ContributorBasicInfo>
-            <div>
-              <h1>{contributor.name}</h1>
-              <h3>{contributor.login}</h3>
-              <p>{contributor.bio}</p>
+    <ContributorView>
+      <Link to="/"> &#60;= See All Contributors</Link>
+      <ContributorWrapper>
+        {contributor && (
+          <ContributorContainer>
+            <ContributorBasicInfo>
               <div>
-                <span>
-                  <strong>{contributor.followers}</strong> followers
-                </span>{" "}
-                <span>
-                  <strong>{contributor.following}</strong> following
-                </span>
+                <h1>{contributor.name}</h1>
+                <h3>{contributor.login}</h3>
+                <p>{contributor.bio}</p>
+                <div>
+                  <span>
+                    <strong>{contributor.followers}</strong> followers
+                  </span>{" "}
+                  <span>
+                    <strong>{contributor.following}</strong> following
+                  </span>
+                </div>
+                <hr />
+                <div>
+                  <span>{contributor.company}</span>
+                  <br />
+                  <span>{contributor.location}</span>
+                  <br />
+                  <a href={contributor.blog}>{contributor.blog}</a>
+                </div>
               </div>
-              <hr />
-              <div>
-                <span>{contributor.company}</span>
-                <br />
-                <span>{contributor.location}</span>
-                <br />
-                <a href={contributor.blog}>{contributor.blog}</a>
-              </div>
-            </div>
-            <img src={contributor.avatar_url} alt={contributor.login} />
-          </ContributorBasicInfo>
-        </ContributorContainer>
-      )}
-    </ContributorWrapper>
+              <img src={contributor.avatar_url} alt={contributor.login} />
+            </ContributorBasicInfo>
+          </ContributorContainer>
+        )}
+      </ContributorWrapper>
+    </ContributorView>
   );
 };
 

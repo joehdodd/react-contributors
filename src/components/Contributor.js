@@ -51,7 +51,6 @@ const Contributor = () => {
     fetch(`https://api.github.com/users/${login}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setContributor(data);
       })
       .catch((error) => {

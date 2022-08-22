@@ -42,7 +42,6 @@ const Contributors = () => {
     fetch("https://api.github.com/repos/facebook/react/contributors")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setContributors([...data]);
       })
       .catch((error) => {

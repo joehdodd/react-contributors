@@ -47,22 +47,20 @@ const theme = {
   },
 };
 
-function RepoContributorApp() {
-  return (
-    <ThemeProvider theme={theme}>
-      <ContributorAppWrapper>
-        <Container>
-          <AppTitle>
-            <h1>React Repository Contributors</h1>
-          </AppTitle>
-          <Routes>
-            <Route path="/" element={<Contributors />} />
-            <Route path="/contributor/:login" element={<Contributor />} />
-          </Routes>
-        </Container>
-      </ContributorAppWrapper>
-    </ThemeProvider>
-  );
-}
+const RepoContributorApp = () => (
+  <ThemeProvider theme={theme}>
+    <ContributorAppWrapper>
+      <Container>
+        <AppTitle>
+          <h1>React Repository Contributors</h1>
+        </AppTitle>
+        <Routes>
+          <Route path="/" element={<Contributors />} />
+          <Route path="/contributor/:login" element={<Contributor />} />
+        </Routes>
+      </Container>
+    </ContributorAppWrapper>
+  </ThemeProvider>
+);
 
 export default RepoContributorApp;

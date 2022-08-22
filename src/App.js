@@ -5,6 +5,9 @@ import Contributor from "./components/Contributor";
 
 const ContributorAppWrapper = styled.div`
   padding: 4%;
+  a {
+    color: ${(props) => props.theme.palette.frontline};
+  }
 `;
 
 const Container = styled.div`

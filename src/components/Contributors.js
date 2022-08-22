@@ -1,6 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Plot from "react-plotly.js";
+
+const ContributorsView = styled.div`
+  display: grid;
+  grid-template-rows: 800px 1fr;
+  grid-gap: 24px;
+  .js-plotly-plot {
+    border-radius: 4px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    padding: 12px;
+    background-color: #fff;
+  }
+`;
 
 const ContributorsContainer = styled.div`
   display: grid;
@@ -48,17 +61,49 @@ const Contributors = () => {
         console.log(error);
       });
   }, []);
+
+  const contributorData = useMemo(
+    () =>
+      contributors
+        .sort((a, b) =>
+          a.login.toLowerCase() > b.login.toLowerCase() ? 1 : -1
+        )
+        .map((contributor) => {
+          return {
+            name: contributor.login,
+            commits: contributor.contributions,
+          };
+        }),
+    [contributors]
+  );
   return (
-    <ContributorsContainer>
-      {contributors.map((contributor) => (
-        <Link key={contributor.id} to={`/contributor/${contributor.login}`}>
-          <Contributor>
-            <img src={contributor.avatar_url} alt={contributor.login} />
-            <ContributorName>{contributor.login}</ContributorName>
-          </Contributor>
-        </Link>
-      ))}
-    </ContributorsContainer>
+    <ContributorsView>
+      <Plot
+        data={[
+          {
+            x: [...contributorData.map((contributor) => contributor.commits)],
+            y: [...contributorData.map((contributor) => contributor.name)],
+            type: "bar",
+            orientation: "h",
+            marker: {
+              color: "#402c56",
+            },
+          },
+        ]}
+        layout={{ autosize: true, title: "Total Commits by Contributor" }}
+        config={{ responsive: true, scrollZoom: true }}
+      />
+      <ContributorsContainer>
+        {contributors.map((contributor) => (
+          <Link key={contributor.id} to={`/contributor/${contributor.login}`}>
+            <Contributor>
+              <img src={contributor.avatar_url} alt={contributor.login} />
+              <ContributorName>{contributor.login}</ContributorName>
+            </Contributor>
+          </Link>
+        ))}
+      </ContributorsContainer>
+    </ContributorsView>
   );
 };
 

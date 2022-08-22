@@ -5,12 +5,12 @@ import Plot from "react-plotly.js";
 
 const ContributorsView = styled.div`
   display: grid;
-  grid-template-rows: 800px 1fr;
+  grid-template-rows: 675px 1fr;
   grid-gap: 24px;
   .js-plotly-plot {
     border-radius: 4px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    padding: 12px;
+    padding: 8px;
     background-color: #fff;
   }
 `;
@@ -62,20 +62,16 @@ const Contributors = () => {
       });
   }, []);
 
-  const contributorData = useMemo(
-    () =>
-      contributors
-        .sort((a, b) =>
-          a.login.toLowerCase() > b.login.toLowerCase() ? 1 : -1
-        )
-        .map((contributor) => {
-          return {
-            name: contributor.login,
-            commits: contributor.contributions,
-          };
-        }),
-    [contributors]
-  );
+  const contributorData = useMemo(() => {
+    return [...contributors]
+      .sort((a, b) => (a.login.toLowerCase() > b.login.toLowerCase() ? 1 : -1))
+      .map((contributor) => {
+        return {
+          name: contributor.login,
+          commits: contributor.contributions,
+        };
+      });
+  }, [contributors]);
   return (
     <ContributorsView>
       <Plot
@@ -90,8 +86,22 @@ const Contributors = () => {
             },
           },
         ]}
-        layout={{ autosize: true, title: "Total Commits by Contributor" }}
-        config={{ responsive: true, scrollZoom: true }}
+        layout={{
+          autosize: true,
+          title: "Total Commits by Contributor",
+          margin: {
+            b: 60,
+            pad: 12,
+          },
+          yaxis: {
+            title: "Contributor",
+            automargin: true,
+          },
+          xaxis: {
+            title: "Commits",
+          }
+        }}
+        config={{ responsive: true }}
       />
       <ContributorsContainer>
         {contributors.map((contributor) => (

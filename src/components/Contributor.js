@@ -84,16 +84,28 @@ const Contributor = () => {
           <ContributorContainer>
             <ContributorBasicInfo>
               <div>
-                <h1>{contributor.name}</h1>
+                <h1>
+                  <a
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {contributor.name}
+                  </a>
+                </h1>
                 <h3>{contributor.login}</h3>
                 <p>{contributor.bio}</p>
                 <div>
-                  <span>
-                    <strong>{contributor.followers}</strong> followers
-                  </span>{" "}
-                  <span>
-                    <strong>{contributor.following}</strong> following
-                  </span>
+                  {contributor.followers >= 0 && (
+                    <span>
+                      <strong>{contributor.followers}</strong> followers
+                    </span>
+                  )}{" "}
+                  {contributor.following >= 0 && (
+                    <span>
+                      <strong>{contributor.following}</strong> following
+                    </span>
+                  )}
                 </div>
                 <hr />
                 <div>

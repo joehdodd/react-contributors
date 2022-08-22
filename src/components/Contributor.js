@@ -11,8 +11,6 @@ const ContributorWrapper = styled.div`
 
 const ContributorContainer = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 8px;
   background-color: #fff;
   img {
     width: 100%;
@@ -27,18 +25,22 @@ const ContributorBasicInfo = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 8px;
+  h1,
+  h3,
+  p,
+  span {
+    color: ${(props) => props.theme.palette.frontline};
+  }
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  h3 {
+    margin-top: 0;
+  }
   img {
     width: 100%;
     border-radius: 4px;
-  }
-  span {
-    display: block;
-    font-size: 2rem;
-    margin-bottom: 8px;
-    color: ${(props) => props.theme.palette.frontline};
-  }
-  span:last-of-type {
-    font-size: 1.25rem;
   }
 `;
 
@@ -62,17 +64,29 @@ const Contributor = () => {
       {contributor && (
         <ContributorContainer>
           <ContributorBasicInfo>
-            <img src={contributor.avatar_url} alt={contributor.login} />
             <div>
-              <span>{contributor.login}</span>
-              <span>{contributor.followers} followers</span>
-              <span>{contributor.following} following</span>
-              <span>Bio: {contributor.bio}</span>
+              <h1>{contributor.name}</h1>
+              <h3>{contributor.login}</h3>
+              <p>{contributor.bio}</p>
+              <div>
+                <span>
+                  <strong>{contributor.followers}</strong> followers
+                </span>{" "}
+                <span>
+                  <strong>{contributor.following}</strong> following
+                </span>
+              </div>
+              <hr />
+              <div>
+                <span>{contributor.company}</span>
+                <br />
+                <span>{contributor.location}</span>
+                <br />
+                <a href={contributor.blog}>{contributor.blog}</a>
+              </div>
             </div>
+            <img src={contributor.avatar_url} alt={contributor.login} />
           </ContributorBasicInfo>
-          <div>
-            <hr />
-          </div>
         </ContributorContainer>
       )}
     </ContributorWrapper>

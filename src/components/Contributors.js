@@ -43,9 +43,21 @@ const Contributor = styled.div`
   }
 `;
 
+const ContributorInfoContainer = styled.div`
+  display: grid;
+  grid-autoflow: row;
+  grid-gap: 4px;
+`;
+
 const ContributorName = styled.span`
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: ${(props) => props.theme.palette.frontline};
+`;
+
+const ContributionInfo = styled.span`
+  font-size: 1rem;
+  font-weight: 400;
   color: ${(props) => props.theme.palette.frontline};
 `;
 
@@ -68,7 +80,7 @@ const Contributors = () => {
       .map((contributor) => {
         return {
           name: contributor.login,
-          commits: contributor.contributions,
+          cont: contributor.contributions,
         };
       });
   }, [contributors]);
@@ -77,7 +89,7 @@ const Contributors = () => {
       <Plot
         data={[
           {
-            x: [...contributorData.map((contributor) => contributor.commits)],
+            x: [...contributorData.map((contributor) => contributor.cont)],
             y: [...contributorData.map((contributor) => contributor.name)],
             type: "bar",
             orientation: "h",
@@ -88,7 +100,7 @@ const Contributors = () => {
         ]}
         layout={{
           autosize: true,
-          title: "Total Commits by Contributor",
+          title: "Total Contributions by Contributor",
           margin: {
             b: 60,
             pad: 12,
@@ -98,8 +110,8 @@ const Contributors = () => {
             automargin: true,
           },
           xaxis: {
-            title: "Commits",
-          }
+            title: "Contributions",
+          },
         }}
         config={{ responsive: true }}
       />
@@ -108,7 +120,12 @@ const Contributors = () => {
           <Link key={contributor.id} to={`/contributor/${contributor.login}`}>
             <Contributor>
               <img src={contributor.avatar_url} alt={contributor.login} />
-              <ContributorName>{contributor.login}</ContributorName>
+              <ContributorInfoContainer>
+                <ContributorName>{contributor.login}</ContributorName>
+                <ContributionInfo>
+                  Contributions:{contributor.contributions}
+                </ContributionInfo>
+              </ContributorInfoContainer>
             </Contributor>
           </Link>
         ))}

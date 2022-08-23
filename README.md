@@ -5,7 +5,7 @@
 1. `npm install`
 2. `npm start`
 
-Although GitHub's API mentions a token, I didn't have issues accessing the endpoints used in this application. 
+Although GitHub's API mentions a token, I didn't have issues accessing the endpoints used in this application without a token. 
 
 ### Styling
 

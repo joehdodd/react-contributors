@@ -94,7 +94,7 @@ const Contributors = () => {
             type: "bar",
             orientation: "h",
             marker: {
-              color: "#402c56",
+              color: "#7e4082",
             },
           },
         ]}

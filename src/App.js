@@ -45,7 +45,7 @@ const theme = {
     desktopLarge: "@media screen and (min-width: 1440px)",
   },
   palette: {
-    frontline: "#402c56",
+    frontline: "#7e4082",
     grey: "#f0f2f5",
   },
 };
